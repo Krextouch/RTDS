@@ -1,0 +1,30 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# All Vagrant configuration is done below. The "2" in Vagrant.configure
+# configures the configuration version (we support older styles for
+# backwards compatibility). Please don't change it unless you know what
+# you're doing.
+Vagrant.configure("2") do |config|
+
+  config.vm.define "un" do |un|
+    un.vm.provider "virtualbox" do |vb_un|
+      vb_un.name = "Node 1"
+      vb_un.memory = 4096
+      vb_un.cpus = 2
+    end
+
+    un.vm.box =  "ubuntu/focal64"
+    un.vm.hostname = "un"
+    un.vm.boot_timeout = 1000
+    un.vm.network "forwarded_port", guest:27017, host: 27117
+    un.vm.network "forwarded_port", guest:27018, host: 27118
+    un.vm.network "forwarded_port", guest:27019, host: 27119
+
+    un.trigger.after :up do |trigger|
+      trigger.run_remote = {path: "un.sh"}
+    end
+    # un.vm.provision "shell", path: "un.sh"
+  end
+
+end
