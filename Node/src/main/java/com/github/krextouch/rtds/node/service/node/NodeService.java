@@ -23,11 +23,6 @@ public class NodeService {
         this.sequenceGeneratorService = sequenceGeneratorService;
         this.trafficControlLogic = trafficControlLogic;
     }
-
-    public void hello() {
-        System.out.println("Hello world");
-    }
-
     public short initClient() {
         return sequenceGeneratorService.generateSequence(Client.SEQUENCE_NAME);
     }
