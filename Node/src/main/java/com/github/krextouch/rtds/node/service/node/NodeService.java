@@ -6,7 +6,9 @@ import com.github.krextouch.rtds.node.service.model.SequenceGeneratorService;
 import com.github.krextouch.rtds.node.service.trafficcontrol.Coordinate;
 import com.github.krextouch.rtds.node.service.trafficcontrol.TrafficControlLogic;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 public class NodeService {
@@ -29,6 +31,9 @@ public class NodeService {
     }
 
     public short[] moveClient(short clientId, short[] curPos, short[] destPos) {
+        if(!clientRepository.existsById(clientId)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "ClientId not found");
+        }
         Coordinate coorCurPos = new Coordinate(curPos[0], curPos[1]);
         Coordinate coorDestPos = new Coordinate(destPos[0], destPos[1]);
 
