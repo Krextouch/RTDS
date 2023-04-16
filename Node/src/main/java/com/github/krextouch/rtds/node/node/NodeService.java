@@ -28,7 +28,15 @@ public class NodeService {
     }
 
     public short initClient() {
-        return sequenceGeneratorService.generateSequence(Client.SEQUENCE_NAME);
+        short clientId = sequenceGeneratorService.generateSequence(Client.SEQUENCE_NAME);
+        clientRepository.save(
+                Client.builder()
+                        .id(clientId)
+                        .curPos(new Coordinate((short) -1, (short) -1))
+                        .destPos(new Coordinate((short) -1, (short) -1))
+                        .build()
+        );
+        return clientId;
     }
 
     public short[] moveClient(short clientId, short[] curPos, short[] destPos) {
