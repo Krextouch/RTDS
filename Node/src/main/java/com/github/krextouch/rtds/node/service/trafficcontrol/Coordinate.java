@@ -1,22 +1,17 @@
 package com.github.krextouch.rtds.node.service.trafficcontrol;
 
+import lombok.Getter;
+
 /**
  * simple coordinate class used
  * */
+@Getter
 public class Coordinate {
-    short x = -1;
-    short y = -1;
+    private short x;
+    private short y;
 
     public Coordinate(short x, short y) {
         this.x = x;
         this.y = y;
-    }
-
-    public short getX() {
-        return x;
-    }
-
-    public short getY() {
-        return y;
     }
 }
