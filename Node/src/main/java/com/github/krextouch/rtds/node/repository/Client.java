@@ -1,5 +1,6 @@
 package com.github.krextouch.rtds.node.repository;
 
+import com.github.krextouch.rtds.node.service.trafficcontrol.Coordinate;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,7 +18,7 @@ public class Client {
     @Id
     public short id;
 
-    public short[] curPos;
+    public Coordinate curPos;
 
-    public short[] destPos;
+    public Coordinate destPos;
 }
