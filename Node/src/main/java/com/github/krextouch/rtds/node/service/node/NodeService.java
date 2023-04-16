@@ -1,5 +1,6 @@
 package com.github.krextouch.rtds.node.service.node;
 
+import com.github.krextouch.rtds.node.NodeApplication;
 import com.github.krextouch.rtds.node.repository.Client;
 import com.github.krextouch.rtds.node.repository.ClientRepository;
 import com.github.krextouch.rtds.node.service.model.SequenceGeneratorService;
@@ -31,14 +32,17 @@ public class NodeService {
     }
 
     public short[] moveClient(short clientId, short[] curPos, short[] destPos) {
-        if(!clientRepository.existsById(clientId)) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "ClientId not found");
-        }
         Coordinate coorCurPos = new Coordinate(curPos[0], curPos[1]);
         Coordinate coorDestPos = new Coordinate(destPos[0], destPos[1]);
+        if(!clientRepository.existsById(clientId)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "ClientId not found");
+        } else if(checkIfCoordinatesAreInvalid(coorCurPos)) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Current coordinates out of bounds");
+        } else if(checkIfCoordinatesAreInvalid(coorDestPos)) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Destination coordinates out of bounds");
+        }
 
         Coordinate nextStep = trafficControlLogic.move(coorCurPos, coorDestPos);
-
         clientRepository.save(
                 Client.builder()
                         .id(clientId)
@@ -46,7 +50,17 @@ public class NodeService {
                         .destPos(coorDestPos)
                         .build()
         );
-
         return new short[]{nextStep.getX(), nextStep.getY()};
+    }
+
+    private boolean checkIfCoordinatesAreInvalid(Coordinate coor) {
+        short maxX = NodeApplication.getArgs().get("maxX");
+        short maxY = NodeApplication.getArgs().get("maxY");
+
+        if(coor.getX() >= 0 && coor.getX() < maxX
+                && coor.getY() >= 0 && coor.getY() < maxY) {
+            return false;
+        }
+        return true;
     }
 }
