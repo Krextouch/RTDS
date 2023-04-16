@@ -1,4 +1,4 @@
-package com.github.krextouch.rtds.node.service;
+package com.github.krextouch.rtds.node.service.node;
 
 import com.github.krextouch.rtds.node.repository.Client;
 import com.github.krextouch.rtds.node.repository.ClientRepository;
@@ -25,7 +25,7 @@ public class NodeService {
 
     }
 
-    public void moveClient(short curPos, short destPos) {
+    public void moveClient(short[] curPos, short[] destPos) {
         System.out.println("Init");
 
         clientRepository.save(
@@ -37,7 +37,15 @@ public class NodeService {
         );
     }
 
-    public void moveClient(short clientId, short curPos, short destPos) {
+    public void moveClient(short clientId, short[] curPos, short[] destPos) {
         System.out.println("Move");
+
+        clientRepository.save(
+                Client.builder()
+                        .id(clientId)
+                        .curPos(curPos)
+                        .destPos(destPos)
+                        .build()
+        );
     }
 }

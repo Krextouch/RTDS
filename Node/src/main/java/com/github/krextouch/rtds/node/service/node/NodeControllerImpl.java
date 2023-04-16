@@ -1,4 +1,4 @@
-package com.github.krextouch.rtds.node.service;
+package com.github.krextouch.rtds.node.service.node;
 
 import com.github.krextouch.rtds.node.service.model.MoveRequest;
 import org.springframework.stereotype.Controller;
@@ -19,13 +19,12 @@ public class NodeControllerImpl implements NodeController {
 
     @Override
     public String move(MoveRequest moveRequest) {
-        if(moveRequest.getClientId() < 0) {
+        if (moveRequest.getClientId() <= 0) {
             nodeService.moveClient(
                     moveRequest.getCurPos(),
                     moveRequest.getDestPos()
             );
-        }
-        else {
+        } else {
             nodeService.moveClient(
                     moveRequest.getClientId(),
                     moveRequest.getCurPos(),

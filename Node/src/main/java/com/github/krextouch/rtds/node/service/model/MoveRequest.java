@@ -12,6 +12,9 @@ import lombok.NoArgsConstructor;
 public class MoveRequest {
 
     private short clientId;
-    private short curPos;
-    private short destPos;
+
+    private short[] curPos;
+
+    private short[] destPos;
+
 }

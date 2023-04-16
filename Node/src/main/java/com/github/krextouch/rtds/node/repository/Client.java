@@ -17,7 +17,8 @@ public class Client {
     @Id
     public short id;
 
-    public short curPos;
+    public short[] curPos;
 
-    public short destPos;
+    public short[] destPos;
+
 }
