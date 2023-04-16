@@ -28,14 +28,11 @@ public class NodeService {
         System.out.println("Hello world");
     }
 
-    public short[] moveClient(short[] curPos, short[] destPos) {
-        System.out.println("Init");
-        short clientId = sequenceGeneratorService.generateSequence(Client.SEQUENCE_NAME);
-        return moveClient(clientId, curPos, destPos);
+    public short initClient() {
+        return sequenceGeneratorService.generateSequence(Client.SEQUENCE_NAME);
     }
 
     public short[] moveClient(short clientId, short[] curPos, short[] destPos) {
-        System.out.println("Move");
         Coordinate coorCurPos = new Coordinate(curPos[0], curPos[1]);
         Coordinate coorDestPos = new Coordinate(destPos[0], destPos[1]);
 

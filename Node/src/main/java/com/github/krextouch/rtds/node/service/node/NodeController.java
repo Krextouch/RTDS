@@ -10,6 +10,9 @@ public interface NodeController {
     @GetMapping("/hello")
     void hello();
 
+    @GetMapping("/initClient")
+    short initClient();
+
     @PostMapping("/move")
     short[] move(@RequestBody MoveRequest moveRequest);
 
