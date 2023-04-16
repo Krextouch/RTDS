@@ -27,7 +27,6 @@ class Client:
                    and self.data['curPos'][1] is self.data['destPos'][1]):
             response = requests.post(url=self.base_url + 'move', json=self.data, headers={})
             self.data['curPos'] = response.json()
-            print(response.text)
             if sleep_timer:
                 time.sleep(sleep_timer)
 
