@@ -20,5 +20,4 @@ public class Client {
     public short[] curPos;
 
     public short[] destPos;
-
 }
