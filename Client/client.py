@@ -23,9 +23,11 @@ class Client:
             print(f'destPos: {self.data["destPos"]}')
 
     def start(self, sleep_timer=0):
-        while not (self.data['curPos'][0] is self.data['destPos'][0]
-                   and self.data['curPos'][1] is self.data['destPos'][1]):
+        while not (self.data['curPos'][0] == self.data['destPos'][0]
+                   and self.data['curPos'][1] == self.data['destPos'][1]):
             response = requests.post(url=self.base_url + 'move', json=self.data, headers={})
             self.data['curPos'] = response.json()
             if sleep_timer:
                 time.sleep(sleep_timer)
+
+            #print(self.data['curPos'], self.data['destPos'])

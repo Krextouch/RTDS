@@ -1,16 +1,23 @@
-# This is a sample Python script.
+import multiprocessing
 
-# Press Umschalt+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+from client import *
+from threading import Thread
+from multiprocessing import Process
+
+def main():
+
+    pool = multiprocessing.Pool()
+    pool.map(client_thread(), range(0, 3))
+
+    #for x in range(100):
+    #    print(x)
+    #    process = Process(target=client_thread())
+    #    process.start()
 
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Strg+F8 to toggle the breakpoint.
+def client_thread():
+    client = Client(1000, 1000)
+    client.start(0)
 
-
-# Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    main()
