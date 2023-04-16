@@ -18,19 +18,20 @@ public class NodeControllerImpl implements NodeController {
     }
 
     @Override
-    public String move(MoveRequest moveRequest) {
+    public short[] move(MoveRequest moveRequest) {
+        short[] nextStep;
         if (moveRequest.getClientId() <= 0) {
-            nodeService.moveClient(
+            nextStep = nodeService.moveClient(
                     moveRequest.getCurPos(),
                     moveRequest.getDestPos()
             );
         } else {
-            nodeService.moveClient(
+            nextStep = nodeService.moveClient(
                     moveRequest.getClientId(),
                     moveRequest.getCurPos(),
                     moveRequest.getDestPos()
             );
         }
-        return "";
+        return nextStep;
     }
 }
