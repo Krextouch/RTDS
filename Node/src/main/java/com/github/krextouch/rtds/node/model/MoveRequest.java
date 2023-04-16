@@ -1,4 +1,4 @@
-package com.github.krextouch.rtds.node.service.model;
+package com.github.krextouch.rtds.node.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

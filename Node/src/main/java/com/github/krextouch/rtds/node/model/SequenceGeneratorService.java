@@ -1,4 +1,4 @@
-package com.github.krextouch.rtds.node.service.model;
+package com.github.krextouch.rtds.node.model;
 
 import com.github.krextouch.rtds.node.repository.DatabaseSequence;
 import org.springframework.beans.factory.annotation.Autowired;

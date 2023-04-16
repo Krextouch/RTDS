@@ -1,11 +1,11 @@
-package com.github.krextouch.rtds.node.service.node;
+package com.github.krextouch.rtds.node.node;
 
 import com.github.krextouch.rtds.node.NodeApplication;
 import com.github.krextouch.rtds.node.repository.Client;
 import com.github.krextouch.rtds.node.repository.ClientRepository;
-import com.github.krextouch.rtds.node.service.model.SequenceGeneratorService;
-import com.github.krextouch.rtds.node.service.trafficcontrol.Coordinate;
-import com.github.krextouch.rtds.node.service.trafficcontrol.TrafficControlLogic;
+import com.github.krextouch.rtds.node.model.SequenceGeneratorService;
+import com.github.krextouch.rtds.node.trafficcontrol.Coordinate;
+import com.github.krextouch.rtds.node.trafficcontrol.TrafficControlLogic;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;

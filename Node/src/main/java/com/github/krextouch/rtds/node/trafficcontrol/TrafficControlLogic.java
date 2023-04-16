@@ -1,4 +1,4 @@
-package com.github.krextouch.rtds.node.service.trafficcontrol;
+package com.github.krextouch.rtds.node.trafficcontrol;
 
 import com.github.krextouch.rtds.node.NodeApplication;
 import com.github.krextouch.rtds.node.repository.Client;

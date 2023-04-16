@@ -1,4 +1,4 @@
-package com.github.krextouch.rtds.node.service.trafficcontrol;
+package com.github.krextouch.rtds.node.trafficcontrol;
 
 import lombok.Getter;
 

@@ -1,6 +1,6 @@
-package com.github.krextouch.rtds.node.service.node;
+package com.github.krextouch.rtds.node.node;
 
-import com.github.krextouch.rtds.node.service.model.MoveRequest;
+import com.github.krextouch.rtds.node.model.MoveRequest;
 import org.springframework.stereotype.Controller;
 
 @Controller

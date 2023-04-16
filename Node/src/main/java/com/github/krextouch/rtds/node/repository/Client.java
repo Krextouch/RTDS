@@ -1,6 +1,6 @@
 package com.github.krextouch.rtds.node.repository;
 
-import com.github.krextouch.rtds.node.service.trafficcontrol.Coordinate;
+import com.github.krextouch.rtds.node.trafficcontrol.Coordinate;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
