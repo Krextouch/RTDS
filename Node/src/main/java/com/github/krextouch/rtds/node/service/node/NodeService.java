@@ -23,6 +23,7 @@ public class NodeService {
         this.sequenceGeneratorService = sequenceGeneratorService;
         this.trafficControlLogic = trafficControlLogic;
     }
+
     public short initClient() {
         return sequenceGeneratorService.generateSequence(Client.SEQUENCE_NAME);
     }
@@ -41,6 +42,6 @@ public class NodeService {
                         .build()
         );
 
-        return new short[] {nextStep.getX(),nextStep.getY()};
+        return new short[]{nextStep.getX(), nextStep.getY()};
     }
 }

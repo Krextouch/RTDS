@@ -16,5 +16,4 @@ public class MoveRequest {
     private short[] curPos;
 
     private short[] destPos;
-
 }

@@ -4,7 +4,7 @@ import lombok.Getter;
 
 /**
  * simple coordinate class used
- * */
+ */
 @Getter
 public class Coordinate {
     private short x;

@@ -12,5 +12,4 @@ public interface NodeController {
 
     @PostMapping("/move")
     short[] move(@RequestBody MoveRequest moveRequest);
-
 }
