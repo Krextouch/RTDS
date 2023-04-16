@@ -1,18 +1,22 @@
 package com.github.krextouch.rtds.node.service;
 
-import com.github.krextouch.rtds.node.client.ClientRepository;
+import com.github.krextouch.rtds.node.repository.Client;
+import com.github.krextouch.rtds.node.repository.ClientRepository;
+import com.github.krextouch.rtds.node.service.model.SequenceGeneratorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class NodeService {
 
-    @Autowired
-    ClientRepository clientRepository;
+    private final ClientRepository clientRepository;
+
+    private final SequenceGeneratorService sequenceGeneratorService;
 
     @Autowired
-    public NodeService(ClientRepository clientRepository) {
+    public NodeService(ClientRepository clientRepository, SequenceGeneratorService sequenceGeneratorService) {
         this.clientRepository = clientRepository;
+        this.sequenceGeneratorService = sequenceGeneratorService;
     }
 
     public void hello() {
@@ -21,11 +25,19 @@ public class NodeService {
 
     }
 
-    public void moveClient(short currPos, short destPos) {
+    public void moveClient(short curPos, short destPos) {
         System.out.println("Init");
+
+        clientRepository.save(
+                Client.builder()
+                        .id(sequenceGeneratorService.generateSequence(Client.SEQUENCE_NAME))
+                        .curPos(curPos)
+                        .destPos(destPos)
+                        .build()
+        );
     }
 
-    public void moveClient(short clientId, short currPos, short destPos) {
+    public void moveClient(short clientId, short curPos, short destPos) {
         System.out.println("Move");
     }
 }
