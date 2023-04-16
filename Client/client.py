@@ -29,5 +29,3 @@ class Client:
             self.data['curPos'] = response.json()
             if sleep_timer:
                 time.sleep(sleep_timer)
-
-        print(f'Reached goal: {self.data["curPos"]}, {self.data["destPos"]}')
