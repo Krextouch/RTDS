@@ -15,23 +15,27 @@ public class Client {
     private final short clientId;
     private short[] curPos;
     private final short[] destPos;
+    Random rand = new Random();
 
     HttpClient httpClient = HttpClient.newBuilder()
             .version(HttpClient.Version.HTTP_2)
             .build();
 
-    public Client(short maxX, short maxY) throws IOException, InterruptedException {
+    public Client(short maxX, short maxY) {
         //Get clientId
-        HttpRequest request = HttpRequest.newBuilder()
-                .GET()
-                .uri(URI.create(baseUrl + "initClient"))
-                .build();
+        try {
+            HttpRequest request = HttpRequest.newBuilder()
+                    .GET()
+                    .uri(URI.create(baseUrl + "initClient"))
+                    .build();
 
-        HttpResponse<String> response;
-        response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-        clientId = Short.parseShort(response.body());
+            HttpResponse<String> response;
+            response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+            clientId = Short.parseShort(response.body());
+        } catch (IOException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
 
-        Random rand = new Random(System.currentTimeMillis());
         curPos = new short[]{
                 (short) rand.nextInt(maxX),
                 (short) rand.nextInt(maxY)
@@ -57,21 +61,22 @@ public class Client {
                 HttpResponse<String> response;
                 response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
                 curPos = extractValues(response.body());
-
-                if (debug) {
-                    System.out.println("CurrentPos: " + curPos[0] + ":" + curPos[1]);
-                    System.out.println("DestPos: " + destPos[0] + ":" + destPos[1]);
-                    System.out.println("----------------------");
-                }
             } catch (IOException | InterruptedException e) {
                 throw new RuntimeException(e);
             }
+
+
+            if(Thread.currentThread().getName().equals("ClientThreadNr_0")
+            && debug) {
+                System.out.println("Progress: CurrentPos [" + curPos[0] + ":" + curPos[1] + "], DestPos [" + destPos[0] + ":" + destPos[1] + "]");
+            }
         }
+        if(debug) System.out.println("Reached goal. " + Thread.currentThread().getName());
     }
 
     private short[] extractValues(String responseString) {
         String shortendString = responseString.substring(1, responseString.length() - 1);
-        
+
         return new short[]{
                 Short.parseShort(shortendString.split(",")[0]),
                 Short.parseShort(shortendString.split(",")[1])
