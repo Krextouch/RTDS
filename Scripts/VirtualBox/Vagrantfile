@@ -17,14 +17,18 @@ Vagrant.configure("2") do |config|
     un.vm.box =  "ubuntu/focal64"
     un.vm.hostname = "un"
     un.vm.boot_timeout = 1000
+
     un.vm.network "forwarded_port", guest:27017, host: 27117
     un.vm.network "forwarded_port", guest:27018, host: 27118
     un.vm.network "forwarded_port", guest:27019, host: 27119
 
+    un.vm.network "forwarded_port", guest:8080, host: 8081
+
     un.trigger.after :up do |trigger|
-      trigger.run_remote = {path: "un.sh"}
+      trigger.run_remote = {inline: "bash /vagrant/initNode.sh"}
+      #trigger.run_remote = {inline: "bash /vagrant/initNode.sh && /vagrant/initConfigServer.sh"}
     end
-    # un.vm.provision "shell", path: "un.sh"
+    # un.vm.provision "shell", path: "initNode.sh"
   end
 
 end
