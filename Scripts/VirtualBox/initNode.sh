@@ -61,4 +61,4 @@ gradle clean build
 
 # Run grdle app
 cd build/libs
-java -jar Node-"${version}".jar
+sudo java -jar Node-"${version}".jar
