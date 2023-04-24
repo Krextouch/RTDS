@@ -10,4 +10,4 @@ net:
 sharding:
   clusterRole: shardsvr
 replication:
-  replSetName: rtds
+  replSetName: RTDSshard

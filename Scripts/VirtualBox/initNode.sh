@@ -59,6 +59,6 @@ version=${version// /} #Trim white spaces
 # Build gradle app
 gradle clean build
 
-# Run grdle app
+# Run gradle app
 cd build/libs
-# sudo java -jar Node-"${version}".jar &
+# sudo java -jar Node-"${version}".jar maxX=1000 maxY=1000 &
