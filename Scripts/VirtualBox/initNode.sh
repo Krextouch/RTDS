@@ -15,7 +15,7 @@ get -qO - https://www.mongodb.org/static/pgp/server-6.0.asc | sudo apt-key add -
 echo "deb [ arch=amd64,arm64 signed-by=/usr/share/keyrings/mongodb-server-6.0.gpg ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/6.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-6.0.list
 sudo apt-get update
 
- Install Java
+# Install Java
 sudo apt install -y temurin-17-jdk
 
 # Install mongoDB
@@ -61,4 +61,4 @@ gradle clean build
 
 # Run grdle app
 cd build/libs
-sudo java -jar Node-"${version}".jar
+# sudo java -jar Node-"${version}".jar &
