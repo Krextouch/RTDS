@@ -1,0 +1,11 @@
+systemLog:
+  destination: file
+  path: /var/log/mongodb/mongodRouter.log
+  logAppend: true
+net:
+  port: 27017
+  bindIp: 0.0.0.0
+sharding:
+  clusterRole: configsvr
+replication:
+  replSetName: RTDSrouter

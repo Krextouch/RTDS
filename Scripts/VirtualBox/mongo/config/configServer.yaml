@@ -1,0 +1,13 @@
+systemLog:
+  destination: file
+  path: /var/log/mongodb/mongodConfig.log
+  logAppend: true
+storage:
+  dbPath: /var/lib/mongodb/configS
+net:
+  port: 27019
+  bindIp: 0.0.0.0
+sharding:
+  clusterRole: configsvr
+replication:
+  replSetName: RTDSconfig

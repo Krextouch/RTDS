@@ -1,0 +1,13 @@
+systemLog:
+  destination: file
+  path: /var/log/mongodb/mongodShard.log
+  logAppend: true
+storage:
+  dbPath: /var/lib/mongodb/shardS
+net:
+  port: 27018
+  bindIp: 0.0.0.0
+sharding:
+  configDB: RTDSconfig/localhost:27019
+replication:
+  replSetName: RTDSshard
