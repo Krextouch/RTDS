@@ -8,6 +8,6 @@ net:
   port: 27018
   bindIp: 0.0.0.0
 sharding:
-  configDB: RTDSconfig/localhost:27019
+  clusterRole: shardsvr
 replication:
-  replSetName: RTDSshard
+  replSetName: rtds

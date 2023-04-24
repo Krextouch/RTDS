@@ -17,33 +17,46 @@ Vagrant.configure("2") do |config|
     un.vm.box =  "ubuntu/focal64"
     un.vm.hostname = "un"
     un.vm.boot_timeout = 1000
-    un.vm.network "public_network", bridge: "Realtek USB GbE Family Controller #3"
+    un.vm.network "public_network", bridge: "Realtek USB GbE Family Controller #3", ip: "192.168.10.201"
 
     un.trigger.after :up do |trigger|
-      trigger.run_remote = {inline: "bash /vagrant/initNode.sh -c 27119 -r 27117 -s 27118"}
-      #trigger.run_remote = {inline: "bash /vagrant/initNode.sh && /vagrant/initConfigServer.sh"}
+      trigger.run_remote = {inline: "bash /vagrant/initNode.sh"}
     end
-    # un.vm.provision "shell", path: "initNode.sh"
   end
 
   config.vm.define "dos" do |dos|
       dos.vm.provider "virtualbox" do |vb_dos|
-        vb_dos.name = "Node 1"
+        vb_dos.name = "Node 2"
         vb_dos.memory = 2048
         vb_dos.cpus = 2
       end
 
-      un.vm.box =  "ubuntu/focal64"
-      un.vm.hostname = "dos"
-      un.vm.boot_timeout = 1000
-      un.vm.network "public_network", bridge: "Realtek USB GbE Family Controller #3"
+      dos.vm.box =  "ubuntu/focal64"
+      dos.vm.hostname = "dos"
+      dos.vm.boot_timeout = 1000
+      dos.vm.network "public_network", bridge: "Realtek USB GbE Family Controller #3", ip: "192.168.10.202"
 
-      un.trigger.after :up do |trigger|
-        trigger.run_remote = {inline: "bash /vagrant/initNode.sh -c 27219 -r 27217 -s 27218"}
-        #trigger.run_remote = {inline: "bash /vagrant/initNode.sh && /vagrant/initConfigServer.sh"}
+      dos.trigger.after :up do |trigger|
+        trigger.run_remote = {inline: "bash /vagrant/initNode.sh"}
       end
-      # un.vm.provision "shell", path: "initNode.sh"
     end
+
+  config.vm.define "tres" do |tres|
+        tres.vm.provider "virtualbox" do |vb_tres|
+          vb_tres.name = "Node 3"
+          vb_tres.memory = 2048
+          vb_tres.cpus = 2
+        end
+
+        tres.vm.box =  "ubuntu/focal64"
+        tres.vm.hostname = "tres"
+        tres.vm.boot_timeout = 1000
+        tres.vm.network "public_network", bridge: "Realtek USB GbE Family Controller #3", ip: "192.168.10.203"
+
+        tres.trigger.after :up do |trigger|
+          trigger.run_remote = {inline: "bash /vagrant/initNode.sh && /vagrant/initMongoDBServers.sh"}
+        end
+      end
 
   # Adding RSA public key to VM
   config.vm.provision "shell" do |s|
