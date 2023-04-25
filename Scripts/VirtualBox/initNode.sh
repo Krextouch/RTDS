@@ -1,5 +1,32 @@
 #!/usr/bin/env bash
 
+# Set IP-address of Nodes
+n1="192.168.10.201"
+n2="192.168.10.202"
+n3="192.168.10.203"
+
+# Edit files
+sed -i 's/n1/$"{n1}"/' /vagrant/mongo/config/routerServer.yaml
+sed -i 's/n2/$"{n2}"/' /vagrant/mongo/config/routerServer.yaml
+sed -i 's/n3/$"{n3}"/' /vagrant/mongo/config/routerServer.yaml
+
+sed -i 's/n1/$"{n1}"/' /vagrant/mongo/shell/configServerInit.js
+sed -i 's/n2/$"{n2}"/' /vagrant/mongo/shell/configServerInit.js
+sed -i 's/n3/$"{n3}"/' /vagrant/mongo/shell/configServerInit.js
+
+sed -i 's/n1/$"{n1}"/' /vagrant/mongo/shell/routerServerInit.js
+sed -i 's/n2/$"{n2}"/' /vagrant/mongo/shell/routerServerInit.js
+sed -i 's/n3/$"{n3}"/' /vagrant/mongo/shell/routerServerInit.js
+
+sed -i 's/n1/$"{n1}"/' /vagrant/mongo/shell/shardServer1Init.js
+sed -i 's/n1/$"{n1}"/' /vagrant/mongo/shell/shardServer1Init.js
+sed -i 's/n1/$"{n1}"/' /vagrant/mongo/shell/shardServer1Init.js
+
+sed -i 's/n1/$"{n1}"/' /vagrant/mongo/shell/shardServer2Init.js
+sed -i 's/n1/$"{n1}"/' /vagrant/mongo/shell/shardServer2Init.js
+sed -i 's/n1/$"{n1}"/' /vagrant/mongo/shell/shardServer2Init.js
+
+
 # Install gnupg
 sudo apt-get install gnupg
 
@@ -51,9 +78,13 @@ url="https://github.com/Krextouch/RTDS/archive/${RTDSbranch}.tar.gz"
 sudo curl -L "${url}" -o RTDS.tar.gz
 sudo tar -xvzf RTDS.tar.gz --strip-components=1 RTDS-${RTDSbranch}/Node
 sudo rm RTDS.tar.gz
-cd Node
+cd Node/src/main/resources
+
+# Set mongoDB URI in Spring Properties
+sed -i 's/MONGOURI/192.168.10.201:27017,192.168.10.202:27017,192.168.10.203:27017/' ./application.properties
 
 # Get version number
+cd /opt/RTDSnode/Node
 version=$(cat ./build.gradle | grep "^version" | cut -d"=" -f2)
 version=${version//\'/} #Trim apostrophes
 version=${version// /} #Trim white spaces
@@ -63,4 +94,4 @@ gradle clean build
 
 # Run gradle app
 cd build/libs
-# sudo java -jar Node-"${version}".jar maxX=1000 maxY=1000 &
+sudo java -jar Node-"${version}".jar maxX=1000 maxY=1000 &

@@ -1,5 +1,5 @@
-sh.addShard("RTDSshard1/192.168.10.201:27018,192.168.10.202:27018,192.168.10.203:27018");
-sh.addShard("RTDSshard2/192.168.10.201:27020,192.168.10.202:27020,192.168.10.203:27020");
+sh.addShard("RTDSshard1/n1:27018,n2:27018,n3:27018");
+sh.addShard("RTDSshard2/n1:27020,n2:27020,n3:27020");
 
 sh.enableSharding("rtds");
 sh.shardCollection("rtds.client", {"_id": "hashed"});
