@@ -24,11 +24,13 @@ sudo apt install -y mongodb-org
 # Create mongoDB dbpath
 sudo mkdir /var/lib/mongodb/configS
 sudo mkdir /var/lib/mongodb/routerS
-sudo mkdir /var/lib/mongodb/shardS
+sudo mkdir /var/lib/mongodb/shardS1
+sudo mkdir /var/lib/mongodb/shardS2
 
 # Run mongod instances
 sudo mongod --config /vagrant/mongo/config/configServer.yaml &
-sudo mongod --config /vagrant/mongo/config/shardServer.yaml &
+sudo mongod --config /vagrant/mongo/config/shardServer1.yaml &
+sudo mongod --config /vagrant/mongo/config/shardServer2.yaml &
 sudo mongos --config /vagrant/mongo/config/routerServer.yaml &
 sleep 5s
 

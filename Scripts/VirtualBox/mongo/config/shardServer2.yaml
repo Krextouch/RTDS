@@ -1,0 +1,13 @@
+systemLog:
+  destination: file
+  path: /var/log/mongodb/mongodShard2.log
+  logAppend: true
+storage:
+  dbPath: /var/lib/mongodb/shardS2
+net:
+  port: 27020
+  bindIp: 0.0.0.0
+sharding:
+  clusterRole: shardsvr
+replication:
+  replSetName: RTDSshard2
