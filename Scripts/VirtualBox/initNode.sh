@@ -6,25 +6,25 @@ n2="192.168.10.202"
 n3="192.168.10.203"
 
 # Edit files
-sed -i 's/n1/$"{n1}"/' /vagrant/mongo/config/routerServer.yaml
-sed -i 's/n2/$"{n2}"/' /vagrant/mongo/config/routerServer.yaml
-sed -i 's/n3/$"{n3}"/' /vagrant/mongo/config/routerServer.yaml
+sed -i 's/n1/'${n1}'/' /vagrant/mongo/config/routerServer.yaml
+sed -i 's/n2/'${n2}'/' /vagrant/mongo/config/routerServer.yaml
+sed -i 's/n3/'${n3}'/' /vagrant/mongo/config/routerServer.yaml
 
-sed -i 's/n1/$"{n1}"/' /vagrant/mongo/shell/configServerInit.js
-sed -i 's/n2/$"{n2}"/' /vagrant/mongo/shell/configServerInit.js
-sed -i 's/n3/$"{n3}"/' /vagrant/mongo/shell/configServerInit.js
+sed -i 's/n1/'${n1}'/' /vagrant/mongo/shell/configServerInit.js
+sed -i 's/n2/'${n2}'/' /vagrant/mongo/shell/configServerInit.js
+sed -i 's/n3/'${n3}'/' /vagrant/mongo/shell/configServerInit.js
 
-sed -i 's/n1/$"{n1}"/' /vagrant/mongo/shell/routerServerInit.js
-sed -i 's/n2/$"{n2}"/' /vagrant/mongo/shell/routerServerInit.js
-sed -i 's/n3/$"{n3}"/' /vagrant/mongo/shell/routerServerInit.js
+sed -i 's/n1/'${n1}'/' /vagrant/mongo/shell/routerServerInit.js
+sed -i 's/n2/'${n2}'/' /vagrant/mongo/shell/routerServerInit.js
+sed -i 's/n3/'${n3}'/' /vagrant/mongo/shell/routerServerInit.js
 
-sed -i 's/n1/$"{n1}"/' /vagrant/mongo/shell/shardServer1Init.js
-sed -i 's/n1/$"{n1}"/' /vagrant/mongo/shell/shardServer1Init.js
-sed -i 's/n1/$"{n1}"/' /vagrant/mongo/shell/shardServer1Init.js
+sed -i 's/n1/'${n1}'/' /vagrant/mongo/shell/shardServer1Init.js
+sed -i 's/n2/'${n2}'/' /vagrant/mongo/shell/shardServer1Init.js
+sed -i 's/n3/'${n3}'/' /vagrant/mongo/shell/shardServer1Init.js
 
-sed -i 's/n1/$"{n1}"/' /vagrant/mongo/shell/shardServer2Init.js
-sed -i 's/n1/$"{n1}"/' /vagrant/mongo/shell/shardServer2Init.js
-sed -i 's/n1/$"{n1}"/' /vagrant/mongo/shell/shardServer2Init.js
+sed -i 's/n1/'${n1}'/' /vagrant/mongo/shell/shardServer2Init.js
+sed -i 's/n2/'${n2}'/' /vagrant/mongo/shell/shardServer2Init.js
+sed -i 's/n3/'${n3}'/' /vagrant/mongo/shell/shardServer2Init.js
 
 
 # Install gnupg
@@ -81,9 +81,9 @@ sudo rm RTDS.tar.gz
 cd Node/src/main/resources
 
 # Set mongoDB URI in Spring Properties
-sed -i 's/n1/$"{n1}"/' ./application.properties
-sed -i 's/n2/$"{n2}"/' ./application.properties
-sed -i 's/n3/$"{n3}"/' ./application.properties
+sed -i 's/n1/'${n1}'/' ./application.properties
+sed -i 's/n2/'${n2}'/' ./application.properties
+sed -i 's/n3/'${n3}'/' ./application.properties
 
 # Get version number
 cd /opt/RTDSnode/Node
