@@ -1,0 +1,9 @@
+systemLog:
+  destination: file
+  path: /var/log/mongodb/mongodRouter.log
+  logAppend: true
+net:
+  port: 27017
+  bindIp: 0.0.0.0
+sharding:
+  configDB: RTDSconfig/n1:27019,n2:27019,n3:27019
