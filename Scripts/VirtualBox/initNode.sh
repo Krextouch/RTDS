@@ -81,7 +81,9 @@ sudo rm RTDS.tar.gz
 cd Node/src/main/resources
 
 # Set mongoDB URI in Spring Properties
-sed -i 's/MONGOURI/192.168.10.201:27017,192.168.10.202:27017,192.168.10.203:27017/' ./application.properties
+sed -i 's/n1/$"{n1}"/' ./application.properties
+sed -i 's/n2/$"{n2}"/' ./application.properties
+sed -i 's/n3/$"{n3}"/' ./application.properties
 
 # Get version number
 cd /opt/RTDSnode/Node
