@@ -13,6 +13,10 @@ public class NodeControllerImpl implements NodeController {
     }
 
     @Override
+    public void health() {
+    }
+
+    @Override
     public short initClient() {
         return nodeService.initClient();
     }

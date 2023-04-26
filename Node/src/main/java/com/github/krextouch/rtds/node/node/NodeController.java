@@ -7,6 +7,9 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/v1")
 public interface NodeController {
 
+    @GetMapping("/health")
+    void health();
+
     @GetMapping("/initClient")
     short initClient();
 
