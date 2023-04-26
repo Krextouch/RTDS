@@ -78,14 +78,7 @@ public class Client {
                 } catch (IOException | InterruptedException e) {
                     handleConnectException();
                 }
-
-                if (Thread.currentThread().getName().equals("ClientThreadNr_0")
-                        && debug) {
-                    System.out.println("Progress: CurrentPos [" + curPos[0] + ":" + curPos[1] + "], DestPos [" + destPos[0] + ":" + destPos[1] + "]");
-                }
             }
-
-
         }
         if (debug) System.out.println("Reached goal. " + Thread.currentThread().getName());
     }
