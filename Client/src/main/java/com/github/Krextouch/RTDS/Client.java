@@ -11,17 +11,21 @@ import java.util.Random;
 
 public class Client {
 
-    private final String baseUrl = "http://localhost:8443/api/v1/";
+    private final String baseUrl = "http://localhost:9000/api/v1/";
     private final short clientId;
     private short[] curPos;
     private final short[] destPos;
+
+    private final boolean debug;
     Random rand = new Random();
 
     HttpClient httpClient = HttpClient.newBuilder()
             .version(HttpClient.Version.HTTP_2)
             .build();
 
-    public Client(short maxX, short maxY) {
+    public Client(short maxX, short maxY, boolean debug) {
+        this.debug = debug;
+
         //Get clientId
         try {
             HttpRequest request = HttpRequest.newBuilder()

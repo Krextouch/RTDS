@@ -10,12 +10,13 @@ public class ClientApplication {
             String[] splitArgs = s.split("=");
             convertedArgs.put(splitArgs[0], splitArgs[1]);
         }
-        ClientThread clientThread = new ClientThread(Short.parseShort(convertedArgs.get("maxX")),
-                Short.parseShort(convertedArgs.get("maxY")), Short.parseShort(convertedArgs.get("clients")));
-        if (convertedArgs.size() > 3) {
-            clientThread.startClients(Boolean.parseBoolean(convertedArgs.get("debug")));
-        } else {
-            clientThread.startClients(false);
-        }
+
+        ClientThread clientThread = new ClientThread(
+                Short.parseShort(convertedArgs.get("maxX")),
+                Short.parseShort(convertedArgs.get("maxY")),
+                Short.parseShort(convertedArgs.get("clients")),
+                Boolean.parseBoolean(convertedArgs.get("debug")));
+
+        clientThread.startClients();
     }
 }
