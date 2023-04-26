@@ -12,10 +12,10 @@ import java.util.Random;
 public class Client {
 
     private final String baseUrl = "http://localhost:9000/api/v1/";
-    private final short clientId;
+    private final byte sleepTime = 15;
+    private short clientId;
     private short[] curPos;
     private final short[] destPos;
-
     private final boolean debug;
     Random rand = new Random();
 
@@ -25,19 +25,24 @@ public class Client {
 
     public Client(short maxX, short maxY, boolean debug) {
         this.debug = debug;
+        boolean caddyIsNotReachable = false;
 
         //Get clientId
-        try {
-            HttpRequest request = HttpRequest.newBuilder()
-                    .GET()
-                    .uri(URI.create(baseUrl + "initClient"))
-                    .build();
+        while (!caddyIsNotReachable) {
+            try {
+                HttpRequest request = HttpRequest.newBuilder()
+                        .GET()
+                        .uri(URI.create(baseUrl + "initClient"))
+                        .build();
 
-            HttpResponse<String> response;
-            response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-            clientId = Short.parseShort(response.body());
-        } catch (IOException | InterruptedException e) {
-            throw new RuntimeException(e);
+                HttpResponse<String> response;
+                response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+                clientId = Short.parseShort(response.body());
+
+                caddyIsNotReachable = true;
+            } catch (IOException | InterruptedException e) {
+                handleConnectException();
+            }
         }
 
         curPos = new short[]{
@@ -54,28 +59,35 @@ public class Client {
         Gson gson = new Gson();
 
         while (!(curPos[0] == destPos[0] && curPos[1] == destPos[1])) {
-            try {
-                HttpRequest request;
-                request = HttpRequest.newBuilder()
-                        .POST(HttpRequest.BodyPublishers.ofString(gson.toJson(new Move(clientId, curPos, destPos))))
-                        .uri(URI.create(baseUrl + "move"))
-                        .header("Content-Type", "application/json")
-                        .header("Accept", "application/json")
-                        .build();
-                HttpResponse<String> response;
-                response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-                curPos = extractValues(response.body());
-            } catch (IOException | InterruptedException e) {
-                throw new RuntimeException(e);
+            boolean caddyIsNotReachable = false;
+
+            while (!caddyIsNotReachable) {
+                try {
+                    HttpRequest request;
+                    request = HttpRequest.newBuilder()
+                            .POST(HttpRequest.BodyPublishers.ofString(gson.toJson(new Move(clientId, curPos, destPos))))
+                            .uri(URI.create(baseUrl + "move"))
+                            .header("Content-Type", "application/json")
+                            .header("Accept", "application/json")
+                            .build();
+                    HttpResponse<String> response;
+                    response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+                    curPos = extractValues(response.body());
+
+                    caddyIsNotReachable = true;
+                } catch (IOException | InterruptedException e) {
+                    handleConnectException();
+                }
+
+                if (Thread.currentThread().getName().equals("ClientThreadNr_0")
+                        && debug) {
+                    System.out.println("Progress: CurrentPos [" + curPos[0] + ":" + curPos[1] + "], DestPos [" + destPos[0] + ":" + destPos[1] + "]");
+                }
             }
 
 
-            if(Thread.currentThread().getName().equals("ClientThreadNr_0")
-            && debug) {
-                System.out.println("Progress: CurrentPos [" + curPos[0] + ":" + curPos[1] + "], DestPos [" + destPos[0] + ":" + destPos[1] + "]");
-            }
         }
-        if(debug) System.out.println("Reached goal. " + Thread.currentThread().getName());
+        if (debug) System.out.println("Reached goal. " + Thread.currentThread().getName());
     }
 
     private short[] extractValues(String responseString) {
@@ -85,5 +97,22 @@ public class Client {
                 Short.parseShort(shortendString.split(",")[0]),
                 Short.parseShort(shortendString.split(",")[1])
         };
+    }
+
+    private void handleConnectException() {
+        byte sleepDuration = randomSleepTime();
+        if (debug) {
+            System.out.println(Thread.currentThread().getName() + " had a connectException... waiting "
+                    + sleepDuration + " seconds for a retry");
+        }
+        try {
+            Thread.sleep(sleepDuration * 1000);
+        } catch (InterruptedException ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+
+    private byte randomSleepTime() {
+        return (byte) (rand.nextInt(sleepTime) + sleepTime);
     }
 }
