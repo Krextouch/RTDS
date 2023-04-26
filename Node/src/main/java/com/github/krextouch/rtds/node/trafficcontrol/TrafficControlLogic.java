@@ -15,10 +15,12 @@ import java.util.List;
 public class TrafficControlLogic {
 
     private final ClientRepository clientRepository;
+    private final short maxClientsPerCoordinate;
 
     @Autowired
     public TrafficControlLogic(ClientRepository clientRepository) {
         this.clientRepository = clientRepository;
+        this.maxClientsPerCoordinate = NodeApplication.getArgs().get("maxClientsPerCoordinate");
     }
 
     public Coordinate move(Coordinate curPos, Coordinate destPos)
@@ -52,13 +54,6 @@ public class TrafficControlLogic {
         return bestCoordinate;
     }
 
-    /**
-     * calculates the distance between 2 points
-     *
-     * @param firstCoordinate
-     * @param secondCoordinate
-     * @return the distance
-     */
     private double getDistance(Coordinate firstCoordinate, Coordinate secondCoordinate) {
         double x1 = firstCoordinate.getX();
         double x2 = secondCoordinate.getX();
@@ -77,6 +72,6 @@ public class TrafficControlLogic {
 
     private boolean isFree(Coordinate coorToCheck) {
         List<Client> clientsAtCoordinate = clientRepository.findClientByCurPos(coorToCheck);
-        return clientsAtCoordinate.size() < 2;
+        return clientsAtCoordinate.size() < maxClientsPerCoordinate;
     }
 }
