@@ -1,0 +1,14 @@
+:9000
+reverse_proxy {
+	# Set ip-addresses here
+	to 192.168.10.201:8090
+	to 192.168.10.202:8090
+	to 192.168.10.203:8090
+
+	lb_policy round_robin
+
+	health_uri /api/v1/health
+    health_status 200
+    health_interval 30s
+    health_timeout 10s
+}

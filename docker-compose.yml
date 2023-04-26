@@ -1,0 +1,7 @@
+version: "3.8"
+services:
+  rtds-caddy:
+    build: ./Client/caddy
+    container_name: rtds-caddy-load-balancer
+    ports:
+      - "9000:9000"
