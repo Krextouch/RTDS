@@ -1,9 +1,9 @@
 :9000
 reverse_proxy {
 	# Set ip-addresses here
-	to n1:8090
-	to n2:8090
-	to n3:8090
+	to 192.168.10.201:8090
+	to 192.168.10.202:8090
+	to 192.168.10.203:8090
 
 	lb_policy round_robin
 
