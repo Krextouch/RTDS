@@ -1,12 +1,13 @@
 package com.github.krextouch.rtds.node.trafficcontrol;
 
-import com.github.krextouch.rtds.node.NodeApplication;
 import com.github.krextouch.rtds.node.repository.Client;
 import com.github.krextouch.rtds.node.repository.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * the logic that can control the traffic in the area
@@ -15,12 +16,13 @@ import java.util.List;
 public class TrafficControlLogic {
 
     private final ClientRepository clientRepository;
-    private final short maxClientsPerCoordinate;
+    private final Environment env;
 
     @Autowired
-    public TrafficControlLogic(ClientRepository clientRepository) {
+    public TrafficControlLogic(ClientRepository clientRepository,
+                               Environment env) {
         this.clientRepository = clientRepository;
-        this.maxClientsPerCoordinate = NodeApplication.getArgs().get("maxClientsPerCoordinate");
+        this.env = env;
     }
 
     public Coordinate move(Coordinate curPos, Coordinate destPos)
@@ -28,8 +30,8 @@ public class TrafficControlLogic {
         // calculate the next step around the current position
         Coordinate bestCoordinate = curPos;
         double distance = getDistance(bestCoordinate, destPos);
-        short maxX = NodeApplication.getArgs().get("maxX");
-        short maxY = NodeApplication.getArgs().get("maxY");
+        short maxX = Short.parseShort(Objects.requireNonNull(env.getProperty("maxX")));
+        short maxY = Short.parseShort(Objects.requireNonNull(env.getProperty("maxY")));
 
         for (int xOffset = -1; xOffset <= 1; xOffset++) {
             for (int yOffset = -1; yOffset <= 1; yOffset++) {
@@ -72,6 +74,6 @@ public class TrafficControlLogic {
 
     private boolean isFree(Coordinate coorToCheck) {
         List<Client> clientsAtCoordinate = clientRepository.findClientByCurPos(coorToCheck);
-        return clientsAtCoordinate.size() < maxClientsPerCoordinate;
+        return clientsAtCoordinate.size() < Short.parseShort(Objects.requireNonNull(env.getProperty("maxClientsPerCoordinate")));
     }
 }

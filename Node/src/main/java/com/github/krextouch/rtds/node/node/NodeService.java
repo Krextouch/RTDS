@@ -1,15 +1,17 @@
 package com.github.krextouch.rtds.node.node;
 
-import com.github.krextouch.rtds.node.NodeApplication;
+import com.github.krextouch.rtds.node.model.SequenceGeneratorService;
 import com.github.krextouch.rtds.node.repository.Client;
 import com.github.krextouch.rtds.node.repository.ClientRepository;
-import com.github.krextouch.rtds.node.model.SequenceGeneratorService;
 import com.github.krextouch.rtds.node.trafficcontrol.Coordinate;
 import com.github.krextouch.rtds.node.trafficcontrol.TrafficControlLogic;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.util.Objects;
 
 @Service
 public class NodeService {
@@ -17,14 +19,17 @@ public class NodeService {
     private final ClientRepository clientRepository;
     private final SequenceGeneratorService sequenceGeneratorService;
     private final TrafficControlLogic trafficControlLogic;
+    private final Environment env;
 
     @Autowired
     public NodeService(ClientRepository clientRepository,
                        SequenceGeneratorService sequenceGeneratorService,
-                       TrafficControlLogic trafficControlLogic) {
+                       TrafficControlLogic trafficControlLogic,
+                       Environment env) {
         this.clientRepository = clientRepository;
         this.sequenceGeneratorService = sequenceGeneratorService;
         this.trafficControlLogic = trafficControlLogic;
+        this.env = env;
     }
 
     public short initClient() {
@@ -42,11 +47,11 @@ public class NodeService {
     public short[] moveClient(short clientId, short[] curPos, short[] destPos) {
         Coordinate coorCurPos = new Coordinate(curPos[0], curPos[1]);
         Coordinate coorDestPos = new Coordinate(destPos[0], destPos[1]);
-        if(!clientRepository.existsById(clientId)) {
+        if (!clientRepository.existsById(clientId)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "ClientId not found");
-        } else if(checkIfCoordinatesAreInvalid(coorCurPos)) {
+        } else if (checkIfCoordinatesAreInvalid(coorCurPos)) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Current coordinates out of bounds");
-        } else if(checkIfCoordinatesAreInvalid(coorDestPos)) {
+        } else if (checkIfCoordinatesAreInvalid(coorDestPos)) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Destination coordinates out of bounds");
         }
 
@@ -62,10 +67,10 @@ public class NodeService {
     }
 
     private boolean checkIfCoordinatesAreInvalid(Coordinate coor) {
-        short maxX = NodeApplication.getArgs().get("maxX");
-        short maxY = NodeApplication.getArgs().get("maxY");
+        short maxX = Short.parseShort(Objects.requireNonNull(env.getProperty("maxX")));
+        short maxY = Short.parseShort(Objects.requireNonNull(env.getProperty("maxY")));
 
-        if(coor.getX() >= 0 && coor.getX() < maxX
+        if (coor.getX() >= 0 && coor.getX() < maxX
                 && coor.getY() >= 0 && coor.getY() < maxY) {
             return false;
         }
