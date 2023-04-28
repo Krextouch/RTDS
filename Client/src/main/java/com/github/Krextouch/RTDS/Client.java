@@ -36,7 +36,9 @@ public class Client {
 
                 HttpResponse<String> response;
                 response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-                if (response.statusCode() == 500) throw new Exception();
+                if (response.statusCode() != 200 &&
+                        response.statusCode() != 201 &&
+                        response.statusCode() != 202) throw new Exception();
                 clientId = Short.parseShort(response.body());
 
                 caddyIsNotReachable = true;
@@ -72,7 +74,9 @@ public class Client {
                             .build();
                     HttpResponse<String> response;
                     response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-                    if (response.statusCode() == 500) throw new Exception();
+                    if (response.statusCode() != 200 &&
+                            response.statusCode() != 201 &&
+                            response.statusCode() != 202) throw new Exception();
                     curPos = extractValues(response.body());
 
                     caddyIsNotReachable = true;
