@@ -86,6 +86,9 @@ public class Client {
             }
         }
         if (debug) System.out.println("Reached goal. " + Thread.currentThread().getName());
+        ClientApplication.finishedClients++;
+        System.out.println(ClientApplication.finishedClients + "/" + ClientApplication.clients
+                + " client/s reached the goal.");
     }
 
     private short[] extractValues(String responseString) {

@@ -6,6 +6,8 @@ import java.util.Map;
 public class ClientApplication {
 
     private static long timeStart;
+    public static short finishedClients = 0;
+    public static short clients;
 
     public static void main(String[] args) {
         Map<String, String> convertedArgs = new HashMap<>();
@@ -20,6 +22,7 @@ public class ClientApplication {
                 Boolean.parseBoolean(convertedArgs.get("debug")),
                 Boolean.parseBoolean(convertedArgs.get("timer")));
 
+        clients = Short.parseShort(convertedArgs.get("clients"));
         if (Boolean.parseBoolean(convertedArgs.get("timer"))) timeStart = System.currentTimeMillis();
 
         clientThread.startClients();
