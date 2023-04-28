@@ -92,7 +92,7 @@ version=${version// /} #Trim white spaces
 
 # Build gradle app
 sudo chmod +x ./gradlew
-./gradlew clean assemble
+sudo ./gradlew clean assemble
 
 # Rename jar file
 cd build/libs
