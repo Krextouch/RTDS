@@ -2,7 +2,6 @@ package com.github.Krextouch.RTDS;
 
 import com.google.gson.Gson;
 
-import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -37,10 +36,11 @@ public class Client {
 
                 HttpResponse<String> response;
                 response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+                if (response.statusCode() == 500) throw new Exception();
                 clientId = Short.parseShort(response.body());
 
                 caddyIsNotReachable = true;
-            } catch (IOException | InterruptedException e) {
+            } catch (Exception e) {
                 handleConnectException();
             }
         }
@@ -72,10 +72,11 @@ public class Client {
                             .build();
                     HttpResponse<String> response;
                     response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+                    if (response.statusCode() == 500) throw new Exception();
                     curPos = extractValues(response.body());
 
                     caddyIsNotReachable = true;
-                } catch (IOException | InterruptedException e) {
+                } catch (Exception e) {
                     handleConnectException();
                 }
             }
@@ -95,7 +96,7 @@ public class Client {
     private void handleConnectException() {
         byte sleepDuration = randomSleepTime();
         if (debug) {
-            System.out.println(Thread.currentThread().getName() + " had a connectException... waiting "
+            System.out.println(Thread.currentThread().getName() + " had a an exception... waiting "
                     + sleepDuration + " seconds for a retry");
         }
         try {
