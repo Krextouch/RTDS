@@ -1,6 +1,6 @@
 systemLog:
   destination: file
-  path: /var/log/mongodb/mongodRouter.log
+  path: /var/log/mongodb/mongosRouter.log
   logAppend: true
 net:
   port: 27017

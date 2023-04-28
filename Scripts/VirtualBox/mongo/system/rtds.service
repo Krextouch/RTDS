@@ -1,0 +1,25 @@
+[Unit]
+Description=RTDS Spring Boot Server Instance
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+ExecStart=java -jar /opt/RTDSnode/Node/build/libs/RTDS.jar --maxX=1000 --maxY=1000 --maxClientsPerCoordinate=2
+# file size
+LimitFSIZE=infinity
+# cpu time
+LimitCPU=infinity
+# virtual memory size
+LimitAS=infinity
+# open files
+LimitNOFILE=64000
+# processes/threads
+LimitNPROC=64000
+# locked memory
+LimitMEMLOCK=infinity
+# total threads (user+kernel)
+TasksMax=infinity
+TasksAccounting=false
+
+[Install]
+WantedBy=multi-user.target

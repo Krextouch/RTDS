@@ -26,6 +26,9 @@ sed -i 's/n1/'${n1}'/' /vagrant/mongo/shell/shardServer2Init.js
 sed -i 's/n2/'${n2}'/' /vagrant/mongo/shell/shardServer2Init.js
 sed -i 's/n3/'${n3}'/' /vagrant/mongo/shell/shardServer2Init.js
 
+# Copy .service files
+sudo cp /vagrant/mongo/system/* /lib/systemd/system
+
 
 # Install gnupg
 sudo apt-get install gnupg
@@ -49,26 +52,22 @@ sudo apt install -y temurin-17-jdk
 sudo apt install -y mongodb-org
 
 # Create mongoDB dbpath
-sudo mkdir /var/lib/mongodb/configS
-sudo mkdir /var/lib/mongodb/routerS
-sudo mkdir /var/lib/mongodb/shardS1
-sudo mkdir /var/lib/mongodb/shardS2
+sudo install -d -o mongodb /var/lib/mongodb/configS
+sudo install -d -o mongodb /var/lib/mongodb/routerS
+sudo install -d -o mongodb /var/lib/mongodb/shardS1
+sudo install -d -o mongodb /var/lib/mongodb/shardS2
 
 # Run mongod instances
-sudo mongod --config /vagrant/mongo/config/configServer.yaml &
-sudo mongod --config /vagrant/mongo/config/shardServer1.yaml &
-sudo mongod --config /vagrant/mongo/config/shardServer2.yaml &
-sudo mongos --config /vagrant/mongo/config/routerServer.yaml &
-sleep 5s
+sudo systemctl enable configMongod
+sudo systemctl enable shard1Mongod
+sudo systemctl enable shard2Mongod
+sudo systemctl enable routerMongos
 
-# Install gradle
-sudo apt install -y unzip
-sudo mkdir /tmp/gradle
-cd /tmp/gradle
-sudo wget https://services.gradle.org/distributions/gradle-8.1-bin.zip
-sudo mkdir /opt/gradle
-sudo unzip -d /opt/gradle gradle-8.1-bin.zip
-export PATH=$PATH:/opt/gradle/gradle-8.1/bin
+sudo systemctl start configMongod
+sudo systemctl start shard1Mongod
+sudo systemctl start shard2Mongod
+sudo systemctl start routerMongos
+sleep 5s
 
 # Clone github repository
 sudo mkdir /opt/RTDSnode
@@ -92,8 +91,14 @@ version=${version//\'/} #Trim apostrophes
 version=${version// /} #Trim white spaces
 
 # Build gradle app
-gradle clean build
+chmod +x ./gradlew
+./gradlew clean assemble
+
+# Rename jar file
+cd build/libs
+mv Node-"${version}".jar RTDS.jar
 
 # Run gradle app
-cd build/libs
-sudo java -jar Node-"${version}".jar maxX=1000 maxY=1000 &
+#java -jar Node-"${version}".jar maxX=1000 maxY=1000 &
+sudo systemctl enable rtds
+sudo systemctl start rtds
