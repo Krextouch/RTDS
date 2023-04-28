@@ -6,25 +6,25 @@ n2="192.168.10.202"
 n3="192.168.10.203"
 
 # Edit files
-sed -i 's/n1/'${n1}'/' /vagrant/mongo/config/routerServer.yaml
-sed -i 's/n2/'${n2}'/' /vagrant/mongo/config/routerServer.yaml
-sed -i 's/n3/'${n3}'/' /vagrant/mongo/config/routerServer.yaml
+sudo sed -i 's/n1/'${n1}'/' /vagrant/mongo/config/routerServer.yaml
+sudo sed -i 's/n2/'${n2}'/' /vagrant/mongo/config/routerServer.yaml
+sudo sed -i 's/n3/'${n3}'/' /vagrant/mongo/config/routerServer.yaml
 
-sed -i 's/n1/'${n1}'/' /vagrant/mongo/shell/configServerInit.js
-sed -i 's/n2/'${n2}'/' /vagrant/mongo/shell/configServerInit.js
-sed -i 's/n3/'${n3}'/' /vagrant/mongo/shell/configServerInit.js
+sudo sed -i 's/n1/'${n1}'/' /vagrant/mongo/shell/configServerInit.js
+sudo sed -i 's/n2/'${n2}'/' /vagrant/mongo/shell/configServerInit.js
+sudo sed -i 's/n3/'${n3}'/' /vagrant/mongo/shell/configServerInit.js
 
-sed -i 's/n1/'${n1}'/' /vagrant/mongo/shell/routerServerInit.js
-sed -i 's/n2/'${n2}'/' /vagrant/mongo/shell/routerServerInit.js
-sed -i 's/n3/'${n3}'/' /vagrant/mongo/shell/routerServerInit.js
+sudo sed -i 's/n1/'${n1}'/' /vagrant/mongo/shell/routerServerInit.js
+sudo sed -i 's/n2/'${n2}'/' /vagrant/mongo/shell/routerServerInit.js
+sudo sed -i 's/n3/'${n3}'/' /vagrant/mongo/shell/routerServerInit.js
 
-sed -i 's/n1/'${n1}'/' /vagrant/mongo/shell/shardServer1Init.js
-sed -i 's/n2/'${n2}'/' /vagrant/mongo/shell/shardServer1Init.js
-sed -i 's/n3/'${n3}'/' /vagrant/mongo/shell/shardServer1Init.js
+sudo sed -i 's/n1/'${n1}'/' /vagrant/mongo/shell/shardServer1Init.js
+sudo sed -i 's/n2/'${n2}'/' /vagrant/mongo/shell/shardServer1Init.js
+sudo sed -i 's/n3/'${n3}'/' /vagrant/mongo/shell/shardServer1Init.js
 
-sed -i 's/n1/'${n1}'/' /vagrant/mongo/shell/shardServer2Init.js
-sed -i 's/n2/'${n2}'/' /vagrant/mongo/shell/shardServer2Init.js
-sed -i 's/n3/'${n3}'/' /vagrant/mongo/shell/shardServer2Init.js
+sudo sed -i 's/n1/'${n1}'/' /vagrant/mongo/shell/shardServer2Init.js
+sudo sed -i 's/n2/'${n2}'/' /vagrant/mongo/shell/shardServer2Init.js
+sudo sed -i 's/n3/'${n3}'/' /vagrant/mongo/shell/shardServer2Init.js
 
 # Copy .service files
 sudo cp /vagrant/mongo/system/* /lib/systemd/system
@@ -80,9 +80,9 @@ sudo rm RTDS.tar.gz
 cd Node/src/main/resources
 
 # Set mongoDB URI in Spring Properties
-sed -i 's/n1/'${n1}'/' ./application.properties
-sed -i 's/n2/'${n2}'/' ./application.properties
-sed -i 's/n3/'${n3}'/' ./application.properties
+sudo sed -i 's/n1/'${n1}'/' ./application.properties
+sudo sed -i 's/n2/'${n2}'/' ./application.properties
+sudo sed -i 's/n3/'${n3}'/' ./application.properties
 
 # Get version number
 cd /opt/RTDSnode/Node
@@ -91,12 +91,12 @@ version=${version//\'/} #Trim apostrophes
 version=${version// /} #Trim white spaces
 
 # Build gradle app
-chmod +x ./gradlew
+sudo chmod +x ./gradlew
 ./gradlew clean assemble
 
 # Rename jar file
 cd build/libs
-mv Node-"${version}".jar RTDS.jar
+sudo mv Node-"${version}".jar RTDS.jar
 
 # Run gradle app
 #java -jar Node-"${version}".jar maxX=1000 maxY=1000 &
