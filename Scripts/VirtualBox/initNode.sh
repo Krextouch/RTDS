@@ -99,6 +99,5 @@ cd build/libs
 sudo mv Node-"${version}".jar RTDS.jar
 
 # Run gradle app
-#java -jar Node-"${version}".jar maxX=1000 maxY=1000 &
 sudo systemctl enable rtds
 sudo systemctl start rtds
