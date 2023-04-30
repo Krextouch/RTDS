@@ -13,6 +13,9 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Objects;
 
+/**
+ * service that manages and updates the clients
+ */
 @Service
 public class NodeService {
 
