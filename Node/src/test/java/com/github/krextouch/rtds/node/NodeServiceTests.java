@@ -38,7 +38,9 @@ public class NodeServiceTests {
     @Autowired
     MongoTemplate mongoTemplate;
 
-    private void setUp() {
+    @BeforeEach
+    @AfterEach
+    void setUp() {
         clientRepository.deleteAll();
         mongoTemplate.remove(new Query(), "database_sequences");
         clientRepository.save(
@@ -48,16 +50,6 @@ public class NodeServiceTests {
                         .destPos(new Coordinate((short) 0, (short) 0))
                         .build()
         );
-    }
-
-    @BeforeEach
-    public void beforeSetUp() {
-        setUp();
-    }
-
-    @AfterEach
-    public void afterSetUp() {
-        setUp();
     }
 
     @Test
