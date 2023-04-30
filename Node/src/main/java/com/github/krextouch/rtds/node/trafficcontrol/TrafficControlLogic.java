@@ -10,14 +10,22 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * the logic that can control the traffic in the area
+ * the logic that can control the traffic
  */
 @Component
 public class TrafficControlLogic {
 
+    // manages all the client related database functions
     private final ClientRepository clientRepository;
+    // environment manages the programm args
     private final Environment env;
 
+    /**
+     * the contructor
+     *
+     * @param clientRepository -> Autowired
+     * @param env              -> Autowired
+     */
     @Autowired
     public TrafficControlLogic(ClientRepository clientRepository,
                                Environment env) {
@@ -25,11 +33,19 @@ public class TrafficControlLogic {
         this.env = env;
     }
 
-    public Coordinate move(Coordinate curPos, Coordinate destPos)
-            throws ArrayIndexOutOfBoundsException {
+    /**
+     * calculates the next step towards the target position; standing still is an option
+     *
+     * @param curPos  -> Coordinate current position
+     * @param destPos -> Coordinate destination position
+     * @return new Coordinate
+     */
+    public Coordinate move(Coordinate curPos, Coordinate destPos) {
         // calculate the next step around the current position
         Coordinate bestCoordinate = curPos;
         double distance = getDistance(bestCoordinate, destPos);
+
+        // get max area values from env
         short maxX = Short.parseShort(Objects.requireNonNull(env.getProperty("maxX")));
         short maxY = Short.parseShort(Objects.requireNonNull(env.getProperty("maxY")));
 
@@ -56,6 +72,13 @@ public class TrafficControlLogic {
         return bestCoordinate;
     }
 
+    /**
+     * calculates the distance between 2 points
+     *
+     * @param firstCoordinate
+     * @param secondCoordinate
+     * @return the distance
+     */
     private double getDistance(Coordinate firstCoordinate, Coordinate secondCoordinate) {
         double x1 = firstCoordinate.getX();
         double x2 = secondCoordinate.getX();
@@ -72,7 +95,14 @@ public class TrafficControlLogic {
         }
     }
 
+    /**
+     * checks if the chosen step is free
+     *
+     * @param coorToCheck the coordinates of the chosen step
+     * @return true if the node fields fewer clients than allowed acording to the arg maxClientsPerCoordinate
+     */
     private boolean isFree(Coordinate coorToCheck) {
+        // gets all clients at coordinate
         List<Client> clientsAtCoordinate = clientRepository.findClientByCurPos(coorToCheck);
         return clientsAtCoordinate.size() < Short.parseShort(Objects.requireNonNull(env.getProperty("maxClientsPerCoordinate")));
     }
