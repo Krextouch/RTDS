@@ -7,7 +7,7 @@ Wants=network-online.target
 User=mongodb
 Group=mongodb
 EnvironmentFile=-/etc/default/mongod
-ExecStart=/usr/bin/mongod --config /vagrant/mongo/config/shardServer2.yaml
+ExecStart=/usr/bin/mongod --config /opt/RTDSnode/mongo/config/shardServer2.yaml
 RuntimeDirectory=mongodb
 # file size
 LimitFSIZE=infinity
