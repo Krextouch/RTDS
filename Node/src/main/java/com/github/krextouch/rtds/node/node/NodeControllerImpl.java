@@ -3,6 +3,9 @@ package com.github.krextouch.rtds.node.node;
 import com.github.krextouch.rtds.node.model.MoveRequest;
 import org.springframework.stereotype.Controller;
 
+/**
+ * controller for handling requests and forwarding them to the correct function
+ */
 @Controller
 public class NodeControllerImpl implements NodeController {
 
