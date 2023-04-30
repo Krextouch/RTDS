@@ -1,5 +1,8 @@
 package com.github.Krextouch.RTDS;
 
+/**
+ * move pojo
+ */
 public class Move {
     short clientId;
     short[] curPos;

@@ -39,7 +39,7 @@ public class ClientThread extends Thread {
             public void run() {
                 if (debug) System.out.println("ClientThreadNr_" + number + " started");
                 Client client = new Client(maxX, maxY, debug);
-                client.move(debug);
+                client.move();
             }
         };
         th.start();
