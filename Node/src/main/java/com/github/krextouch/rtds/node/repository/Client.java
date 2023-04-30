@@ -7,6 +7,9 @@ import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
 
+/**
+ * client entity definition
+ */
 @Builder
 @Getter
 @Setter
