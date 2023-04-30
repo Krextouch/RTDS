@@ -5,29 +5,39 @@ n1="192.168.10.201"
 n2="192.168.10.202"
 n3="192.168.10.203"
 
+
+# Create node directory
+sudo mkdir /opt/RTDSnode
+sudo mkdir /opt/RTDSnode/mongo
+
+# Copy config and shell files to node dir
+curdir=$( dirname -- "$( readlink -f -- "$0"; )"; )
+sudo cp -r "${curdir}"/mongo/shell /opt/RTDSnode/mongo/
+sudo cp -r "${curdir}"/mongo/config /opt/RTDSnode/mongo/
+
 # Edit files
-sudo sed -i 's/n1/'${n1}'/' /vagrant/mongo/config/routerServer.yaml
-sudo sed -i 's/n2/'${n2}'/' /vagrant/mongo/config/routerServer.yaml
-sudo sed -i 's/n3/'${n3}'/' /vagrant/mongo/config/routerServer.yaml
+sudo sed -i 's/n1/'${n1}'/' /opt/RTDSnode/mongo/config/routerServer.yaml
+sudo sed -i 's/n2/'${n2}'/' /opt/RTDSnode/mongo/config/routerServer.yaml
+sudo sed -i 's/n3/'${n3}'/' /opt/RTDSnode/mongo/config/routerServer.yaml
 
-sudo sed -i 's/n1/'${n1}'/' /vagrant/mongo/shell/configServerInit.js
-sudo sed -i 's/n2/'${n2}'/' /vagrant/mongo/shell/configServerInit.js
-sudo sed -i 's/n3/'${n3}'/' /vagrant/mongo/shell/configServerInit.js
+sudo sed -i 's/n1/'${n1}'/' /opt/RTDSnode/mongo/shell/configServerInit.js
+sudo sed -i 's/n2/'${n2}'/' /opt/RTDSnode/mongo/shell/configServerInit.js
+sudo sed -i 's/n3/'${n3}'/' /opt/RTDSnode/mongo/shell/configServerInit.js
 
-sudo sed -i 's/n1/'${n1}'/' /vagrant/mongo/shell/routerServerInit.js
-sudo sed -i 's/n2/'${n2}'/' /vagrant/mongo/shell/routerServerInit.js
-sudo sed -i 's/n3/'${n3}'/' /vagrant/mongo/shell/routerServerInit.js
+sudo sed -i 's/n1/'${n1}'/' /opt/RTDSnode/mongo/shell/routerServerInit.js
+sudo sed -i 's/n2/'${n2}'/' /opt/RTDSnode/mongo/shell/routerServerInit.js
+sudo sed -i 's/n3/'${n3}'/' /opt/RTDSnode/mongo/shell/routerServerInit.js
 
-sudo sed -i 's/n1/'${n1}'/' /vagrant/mongo/shell/shardServer1Init.js
-sudo sed -i 's/n2/'${n2}'/' /vagrant/mongo/shell/shardServer1Init.js
-sudo sed -i 's/n3/'${n3}'/' /vagrant/mongo/shell/shardServer1Init.js
+sudo sed -i 's/n1/'${n1}'/' /opt/RTDSnode/mongo/shell/shardServer1Init.js
+sudo sed -i 's/n2/'${n2}'/' /opt/RTDSnode/mongo/shell/shardServer1Init.js
+sudo sed -i 's/n3/'${n3}'/' /opt/RTDSnode/mongo/shell/shardServer1Init.js
 
-sudo sed -i 's/n1/'${n1}'/' /vagrant/mongo/shell/shardServer2Init.js
-sudo sed -i 's/n2/'${n2}'/' /vagrant/mongo/shell/shardServer2Init.js
-sudo sed -i 's/n3/'${n3}'/' /vagrant/mongo/shell/shardServer2Init.js
+sudo sed -i 's/n1/'${n1}'/' /opt/RTDSnode/mongo/shell/shardServer2Init.js
+sudo sed -i 's/n2/'${n2}'/' /opt/RTDSnode/mongo/shell/shardServer2Init.js
+sudo sed -i 's/n3/'${n3}'/' /opt/RTDSnode/mongo/shell/shardServer2Init.js
 
 # Copy .service files
-sudo cp /vagrant/mongo/system/* /lib/systemd/system
+sudo cp "${curdir}"/mongo/system/* /lib/systemd/system
 
 
 # Install gnupg
@@ -70,7 +80,6 @@ sudo systemctl start routerMongos
 sleep 5s
 
 # Clone github repository
-sudo mkdir /opt/RTDSnode
 cd /opt/RTDSnode
 RTDSbranch="main"
 url="https://github.com/Krextouch/RTDS/archive/${RTDSbranch}.tar.gz"
