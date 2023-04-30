@@ -6,6 +6,9 @@ import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+/**
+ * DatabaseSequence class used for generating ids
+ */
 @Getter
 @Setter
 @NoArgsConstructor

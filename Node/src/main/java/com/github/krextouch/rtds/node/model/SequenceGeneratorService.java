@@ -12,6 +12,9 @@ import static org.springframework.data.mongodb.core.FindAndModifyOptions.options
 import static org.springframework.data.mongodb.core.query.Criteria.where;
 import static org.springframework.data.mongodb.core.query.Query.query;
 
+/**
+ * sequence generator service used for generating auto-increment ids for mongodb
+ */
 @Service
 public class SequenceGeneratorService {
 
