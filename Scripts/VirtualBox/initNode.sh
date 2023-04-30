@@ -5,26 +5,39 @@ n1="192.168.10.201"
 n2="192.168.10.202"
 n3="192.168.10.203"
 
+
+# Create node directory
+sudo mkdir /opt/RTDSnode
+sudo mkdir /opt/RTDSnode/mongo
+
+# Copy config and shell files to node dir
+curdir=$( dirname -- "$( readlink -f -- "$0"; )"; )
+sudo cp -r "${curdir}"/mongo/shell /opt/RTDSnode/mongo/
+sudo cp -r "${curdir}"/mongo/config /opt/RTDSnode/mongo/
+
 # Edit files
-sed -i 's/n1/'${n1}'/' /vagrant/mongo/config/routerServer.yaml
-sed -i 's/n2/'${n2}'/' /vagrant/mongo/config/routerServer.yaml
-sed -i 's/n3/'${n3}'/' /vagrant/mongo/config/routerServer.yaml
+sudo sed -i 's/n1/'${n1}'/' /opt/RTDSnode/mongo/config/routerServer.yaml
+sudo sed -i 's/n2/'${n2}'/' /opt/RTDSnode/mongo/config/routerServer.yaml
+sudo sed -i 's/n3/'${n3}'/' /opt/RTDSnode/mongo/config/routerServer.yaml
 
-sed -i 's/n1/'${n1}'/' /vagrant/mongo/shell/configServerInit.js
-sed -i 's/n2/'${n2}'/' /vagrant/mongo/shell/configServerInit.js
-sed -i 's/n3/'${n3}'/' /vagrant/mongo/shell/configServerInit.js
+sudo sed -i 's/n1/'${n1}'/' /opt/RTDSnode/mongo/shell/configServerInit.js
+sudo sed -i 's/n2/'${n2}'/' /opt/RTDSnode/mongo/shell/configServerInit.js
+sudo sed -i 's/n3/'${n3}'/' /opt/RTDSnode/mongo/shell/configServerInit.js
 
-sed -i 's/n1/'${n1}'/' /vagrant/mongo/shell/routerServerInit.js
-sed -i 's/n2/'${n2}'/' /vagrant/mongo/shell/routerServerInit.js
-sed -i 's/n3/'${n3}'/' /vagrant/mongo/shell/routerServerInit.js
+sudo sed -i 's/n1/'${n1}'/' /opt/RTDSnode/mongo/shell/routerServerInit.js
+sudo sed -i 's/n2/'${n2}'/' /opt/RTDSnode/mongo/shell/routerServerInit.js
+sudo sed -i 's/n3/'${n3}'/' /opt/RTDSnode/mongo/shell/routerServerInit.js
 
-sed -i 's/n1/'${n1}'/' /vagrant/mongo/shell/shardServer1Init.js
-sed -i 's/n2/'${n2}'/' /vagrant/mongo/shell/shardServer1Init.js
-sed -i 's/n3/'${n3}'/' /vagrant/mongo/shell/shardServer1Init.js
+sudo sed -i 's/n1/'${n1}'/' /opt/RTDSnode/mongo/shell/shardServer1Init.js
+sudo sed -i 's/n2/'${n2}'/' /opt/RTDSnode/mongo/shell/shardServer1Init.js
+sudo sed -i 's/n3/'${n3}'/' /opt/RTDSnode/mongo/shell/shardServer1Init.js
 
-sed -i 's/n1/'${n1}'/' /vagrant/mongo/shell/shardServer2Init.js
-sed -i 's/n2/'${n2}'/' /vagrant/mongo/shell/shardServer2Init.js
-sed -i 's/n3/'${n3}'/' /vagrant/mongo/shell/shardServer2Init.js
+sudo sed -i 's/n1/'${n1}'/' /opt/RTDSnode/mongo/shell/shardServer2Init.js
+sudo sed -i 's/n2/'${n2}'/' /opt/RTDSnode/mongo/shell/shardServer2Init.js
+sudo sed -i 's/n3/'${n3}'/' /opt/RTDSnode/mongo/shell/shardServer2Init.js
+
+# Copy .service files
+sudo cp "${curdir}"/mongo/system/* /lib/systemd/system
 
 
 # Install gnupg
@@ -38,7 +51,7 @@ echo "deb https://packages.adoptium.net/artifactory/deb $(awk -F= '/^VERSION_COD
 curl -fsSL https://pgp.mongodb.com/server-6.0.asc | \
    sudo gpg -o /usr/share/keyrings/mongodb-server-6.0.gpg \
    --dearmor
-get -qO - https://www.mongodb.org/static/pgp/server-6.0.asc | sudo apt-key add -
+wget -qO - https://www.mongodb.org/static/pgp/server-6.0.asc | sudo apt-key add -
 echo "deb [ arch=amd64,arm64 signed-by=/usr/share/keyrings/mongodb-server-6.0.gpg ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/6.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-6.0.list
 sudo apt-get update
 
@@ -49,29 +62,24 @@ sudo apt install -y temurin-17-jdk
 sudo apt install -y mongodb-org
 
 # Create mongoDB dbpath
-sudo mkdir /var/lib/mongodb/configS
-sudo mkdir /var/lib/mongodb/routerS
-sudo mkdir /var/lib/mongodb/shardS1
-sudo mkdir /var/lib/mongodb/shardS2
+sudo install -d -o mongodb /var/lib/mongodb/configS
+sudo install -d -o mongodb /var/lib/mongodb/routerS
+sudo install -d -o mongodb /var/lib/mongodb/shardS1
+sudo install -d -o mongodb /var/lib/mongodb/shardS2
 
 # Run mongod instances
-sudo mongod --config /vagrant/mongo/config/configServer.yaml &
-sudo mongod --config /vagrant/mongo/config/shardServer1.yaml &
-sudo mongod --config /vagrant/mongo/config/shardServer2.yaml &
-sudo mongos --config /vagrant/mongo/config/routerServer.yaml &
+sudo systemctl enable configMongod
+sudo systemctl enable shard1Mongod
+sudo systemctl enable shard2Mongod
+sudo systemctl enable routerMongos
+
+sudo systemctl start configMongod
+sudo systemctl start shard1Mongod
+sudo systemctl start shard2Mongod
+sudo systemctl start routerMongos
 sleep 5s
 
-# Install gradle
-sudo apt install -y unzip
-sudo mkdir /tmp/gradle
-cd /tmp/gradle
-sudo wget https://services.gradle.org/distributions/gradle-8.1-bin.zip
-sudo mkdir /opt/gradle
-sudo unzip -d /opt/gradle gradle-8.1-bin.zip
-export PATH=$PATH:/opt/gradle/gradle-8.1/bin
-
 # Clone github repository
-sudo mkdir /opt/RTDSnode
 cd /opt/RTDSnode
 RTDSbranch="main"
 url="https://github.com/Krextouch/RTDS/archive/${RTDSbranch}.tar.gz"
@@ -81,9 +89,9 @@ sudo rm RTDS.tar.gz
 cd Node/src/main/resources
 
 # Set mongoDB URI in Spring Properties
-sed -i 's/n1/'${n1}'/' ./application.properties
-sed -i 's/n2/'${n2}'/' ./application.properties
-sed -i 's/n3/'${n3}'/' ./application.properties
+sudo sed -i 's/n1/'${n1}'/' ./application.properties
+sudo sed -i 's/n2/'${n2}'/' ./application.properties
+sudo sed -i 's/n3/'${n3}'/' ./application.properties
 
 # Get version number
 cd /opt/RTDSnode/Node
@@ -92,8 +100,13 @@ version=${version//\'/} #Trim apostrophes
 version=${version// /} #Trim white spaces
 
 # Build gradle app
-gradle clean build
+sudo chmod +x ./gradlew
+sudo ./gradlew clean assemble
+
+# Rename jar file
+cd build/libs
+sudo mv Node-"${version}".jar RTDS.jar
 
 # Run gradle app
-cd build/libs
-sudo java -jar Node-"${version}".jar maxX=1000 maxY=1000 &
+sudo systemctl enable rtds
+sudo systemctl start rtds
