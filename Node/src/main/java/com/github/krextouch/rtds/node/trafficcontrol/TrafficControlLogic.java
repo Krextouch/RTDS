@@ -23,8 +23,8 @@ public class TrafficControlLogic {
     /**
      * the contructor
      *
-     * @param clientRepository -> Autowired
-     * @param env              -> Autowired
+     * @param clientRepository Autowired
+     * @param env              Autowired
      */
     @Autowired
     public TrafficControlLogic(ClientRepository clientRepository,
@@ -44,11 +44,10 @@ public class TrafficControlLogic {
         // calculate the next step around the current position
         Coordinate bestCoordinate = curPos;
         double distance = getDistance(bestCoordinate, destPos);
-
         // get max area values from env
         short maxX = Short.parseShort(Objects.requireNonNull(env.getProperty("maxX")));
         short maxY = Short.parseShort(Objects.requireNonNull(env.getProperty("maxY")));
-
+        // calculate the next best coordinate
         for (int xOffset = -1; xOffset <= 1; xOffset++) {
             for (int yOffset = -1; yOffset <= 1; yOffset++) {
                 short x = (short) (curPos.getX() + xOffset);
