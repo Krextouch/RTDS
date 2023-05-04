@@ -60,6 +60,8 @@ public class ClientThread extends Thread {
 
     /**
      * initiates and starts client threads
+     *
+     * @return created Thread
      */
     private Thread startThread(int number) {
         // create new thread
