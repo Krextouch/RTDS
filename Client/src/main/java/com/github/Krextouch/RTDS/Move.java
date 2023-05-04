@@ -1,7 +1,11 @@
 package com.github.Krextouch.RTDS;
 
 /**
+ * Move
  * move pojo
+ * author:     inf20020@lehre.dhbw-stuttgart.de
+ * date:       04.05.2023
+ * version:    1.0
  */
 public class Move {
     short clientId;

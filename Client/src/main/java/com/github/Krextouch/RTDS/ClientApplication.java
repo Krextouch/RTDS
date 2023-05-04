@@ -4,9 +4,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * ClientApplication
  * application that starts a defined amount of clients
  * maxX, maxY, clients must be present; debug, timer are optional -> example configuration:
  * maxX=1000 maxY=1000 clients=100 debug=false timer=false
+ * author:     inf20020@lehre.dhbw-stuttgart.de
+ * date:       04.05.2023
+ * version:    1.0
  */
 public class ClientApplication {
 

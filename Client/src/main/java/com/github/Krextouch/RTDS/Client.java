@@ -9,8 +9,13 @@ import java.net.http.HttpResponse;
 import java.util.Random;
 
 /**
+ * Client
  * client that sends request till reaching its destination
+ * author:     inf20020@lehre.dhbw-stuttgart.de
+ * date:       04.05.2023
+ * version:    1.0
  */
+
 public class Client {
 
     // url to the caddy reverse proxy
