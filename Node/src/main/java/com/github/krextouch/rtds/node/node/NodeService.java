@@ -14,7 +14,11 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.Objects;
 
 /**
+ * NodeService
  * service that manages and updates the clients
+ * author:     inf20020@lehre.dhbw-stuttgart.de
+ * date:       04.05.2023
+ * version:    1.0.0
  */
 @Service
 public class NodeService {

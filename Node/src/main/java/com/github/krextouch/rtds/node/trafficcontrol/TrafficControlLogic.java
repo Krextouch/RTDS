@@ -10,7 +10,11 @@ import java.util.List;
 import java.util.Objects;
 
 /**
+ * TrafficControlLogic
  * the logic that can control the traffic
+ * author:     inf20020@lehre.dhbw-stuttgart.de
+ * date:       04.05.2023
+ * version:    1.0.0
  */
 @Component
 public class TrafficControlLogic {

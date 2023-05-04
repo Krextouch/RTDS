@@ -7,7 +7,11 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
- * DatabaseSequence class used for generating ids
+ * DatabaseSequence
+ * class used for generating ids
+ * author:     inf20020@lehre.dhbw-stuttgart.de
+ * date:       04.05.2023
+ * version:    1.0.0
  */
 @Getter
 @Setter

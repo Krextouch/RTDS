@@ -8,7 +8,11 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
 
 /**
+ * Client
  * client entity definition
+ * author:     inf20020@lehre.dhbw-stuttgart.de
+ * date:       04.05.2023
+ * version:    1.0.0
  */
 @Builder
 @Getter

@@ -13,7 +13,11 @@ import static org.springframework.data.mongodb.core.query.Criteria.where;
 import static org.springframework.data.mongodb.core.query.Query.query;
 
 /**
+ * SequenceGeneratorService
  * sequence generator service used for generating auto-increment ids for mongodb
+ * author:     inf20020@lehre.dhbw-stuttgart.de
+ * date:       04.05.2023
+ * version:    1.0.0
  */
 @Service
 public class SequenceGeneratorService {
