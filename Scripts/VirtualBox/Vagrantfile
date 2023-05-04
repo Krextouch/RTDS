@@ -10,8 +10,8 @@ Vagrant.configure("2") do |config|
   config.vm.define "un" do |un|
     un.vm.provider "virtualbox" do |vb_un|
       vb_un.name = "Node 1"
-      vb_un.memory = 2048
-      vb_un.cpus = 2
+      vb_un.memory = 4096
+      vb_un.cpus = 4
     end
 
     un.vm.box =  "ubuntu/focal64"
@@ -27,8 +27,8 @@ Vagrant.configure("2") do |config|
   config.vm.define "dos" do |dos|
       dos.vm.provider "virtualbox" do |vb_dos|
         vb_dos.name = "Node 2"
-        vb_dos.memory = 2048
-        vb_dos.cpus = 2
+        vb_dos.memory = 4096
+        vb_dos.cpus = 4
       end
 
       dos.vm.box =  "ubuntu/focal64"
@@ -44,8 +44,8 @@ Vagrant.configure("2") do |config|
   config.vm.define "tres" do |tres|
         tres.vm.provider "virtualbox" do |vb_tres|
           vb_tres.name = "Node 3"
-          vb_tres.memory = 2048
-          vb_tres.cpus = 2
+          vb_tres.memory = 4096
+          vb_tres.cpus = 4
         end
 
         tres.vm.box =  "ubuntu/focal64"
