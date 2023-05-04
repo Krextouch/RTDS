@@ -1,3 +1,9 @@
+# rtds.service
+# .service file for node application
+# author:     inf20133@lehre.dhbw-stuttgart.de
+# date:       04.05.2023
+# version:    1.0.0
+
 [Unit]
 Description=RTDS Spring Boot Server Instance
 After=network-online.target

@@ -1,3 +1,9 @@
+# routerServer.yaml
+# Config file for the mongos instances
+# author:     inf20133@lehre.dhbw-stuttgart.de
+# date:       04.05.2023
+# version:    1.0.0
+
 systemLog:
   destination: file
   path: /var/log/mongodb/mongosRouter.log

@@ -1,3 +1,11 @@
+/**
+ * shardServer2Init.js
+ * mongosh script for initalizing the shard2 replica set
+ * author:     inf20133@lehre.dhbw-stuttgart.de
+ * date:       04.05.2023
+ * version:    1.0.0
+ */
+
 rs.initiate(
     {
         _id: "RTDSshard2",

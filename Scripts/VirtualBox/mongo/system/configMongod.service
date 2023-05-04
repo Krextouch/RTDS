@@ -1,3 +1,9 @@
+# configMongod.service
+# .service file for mongod config instance
+# author:     inf20133@lehre.dhbw-stuttgart.de
+# date:       04.05.2023
+# version:    1.0.0
+
 [Unit]
 Description=MongoDB Config Server Instance
 After=network-online.target

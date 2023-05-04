@@ -1,3 +1,11 @@
+/**
+ * configServerInit.js
+ * mongosh script for initalizing the config replica set
+ * author:     inf20133@lehre.dhbw-stuttgart.de
+ * date:       04.05.2023
+ * version:    1.0.0
+ */
+
 rs.initiate(
     {
         _id: "RTDSconfig",

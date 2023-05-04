@@ -1,3 +1,9 @@
+# shard1Mongod.service
+# .service file for mongod shard1 instance
+# author:     inf20133@lehre.dhbw-stuttgart.de
+# date:       04.05.2023
+# version:    1.0.0
+
 [Unit]
 Description=MongoDB Shard 1 Server Instance
 After=network-online.target

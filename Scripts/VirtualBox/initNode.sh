@@ -1,5 +1,11 @@
 #!/usr/bin/env bash
 
+# initNode.sh
+# Automatic node install script
+# author:     inf20133@lehre.dhbw-stuttgart.de
+# date:       04.05.2023
+# version:    1.0.0
+
 # Set IP-address of Nodes
 n1="192.168.10.201"
 n2="192.168.10.202"
